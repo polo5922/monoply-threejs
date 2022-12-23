@@ -148,6 +148,7 @@ class Player {
     if (this.position >= 40) {
       this.money += 200;
       this.position = 0;
+      update_player_money();
     }
   }
 }
@@ -281,6 +282,15 @@ function add_player() {
   }
 }
 
+function update_player_money() {
+  document.getElementById("players_stats").innerHTML = "";
+  players.forEach((player) => {
+    document.getElementById(
+      "players_stats"
+    ).innerHTML += `<p>${player.name}: ${player.money} $</p>`;
+  });
+}
+
 var current_player;
 function startGame() {
   current_player = 0;
@@ -291,6 +301,8 @@ function startGame() {
   document.getElementById("roll_dice").style.display = "block";
   document.getElementById("players_form").style.display = "none";
   document.getElementById("Add_Player").style.display = "none";
+  document.getElementById("players_stats").style.display = "block";
+  update_player_money();
   players.forEach((player) => {
     player.initPlayer();
   });
@@ -308,7 +320,9 @@ document.getElementById("roll_dice").addEventListener("click", async () => {
     finish_round = false;
     let random = Math.floor(Math.random() * 6) + 1;
     let random2 = Math.floor(Math.random() * 6) + 1;
-    document.getElementById("dice").innerHTML = `Dice: ${random} + ${random2}`;
+    document.getElementById(
+      "dice"
+    ).innerHTML = `Dice: ${random} + ${random2} = ${random + random2}`;
     for (let i = 0; i < random + random2; i++) {
       players[current_player].addPosition();
       players[current_player].cube.position.y = 0.16;
@@ -393,6 +407,7 @@ function buyCard(card, player) {
   } else if (player.position > 10 && player.position < 40) {
     cards_properties_list[player.position].changeColor(player.color);
   }
+  update_player_money();
   console.table(card);
 }
 
@@ -404,4 +419,5 @@ function payRent(card, player) {
   players.forEach((element) => {
     console.log(element.name, element.money);
   });
+  update_player_money();
 }
