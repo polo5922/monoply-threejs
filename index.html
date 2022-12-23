@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Monopoly</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Monopoly</h1>
+      <button id="Add_Player">Add player</button>
+      <button id="start_game">Start Game</button>
+      <span id="current_player"></span><br />
+      <button id="roll_dice" style="display: none">roll the dice</button><br />
+      <span id="dice"></span>
+      <button id="finish_turn">Finish</button>
+      <span id="camera" style="display: none"></span>
+      <div id="board">
+        <div class="card">
+          <div class="card__content">
+            <div class="card__title">Test</div>
+            <div class="card__subtitle"></div>
+          </div>
+          <div class="card__info"></div>
+          <div class="button__card"></div>
+        </div>
+      </div>
+      <div>
+        <div id="players_form">
+          <input type="text" id="player_name" placeholder="Player name" />
+          <input type="color" id="player_color" placeholder="Player color" />
+        </div>
+      </div>
+    </div>
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
