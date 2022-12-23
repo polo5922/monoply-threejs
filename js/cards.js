@@ -304,7 +304,8 @@ export function exportCard() {
   return cards;
 }
 
-export function generateCardsUi(card) {
+export function generateCardsUi(card, type) {
+  console.log("card generate", card.position);
   document.querySelector(".card__content").style.backgroundColor = card.color;
   document.querySelector(".card__title").innerHTML = card.name;
   let cardInfoSelector = document.querySelector(".card__info");
@@ -325,17 +326,22 @@ export function generateCardsUi(card) {
   }
   console.log(card.owner);
   document.querySelector(".button__card").innerHTML = ``;
-  if (card.owner !== undefined) {
+  if (type == "rent") {
     document.querySelector(
       ".button__card"
     ).innerHTML += `<button class="button__card--close" id="payRent">Pay rent</button>`;
   }
-  if (card.owner === undefined) {
+  if (type == "buy") {
     document.querySelector(
       ".button__card"
     ).innerHTML += `<button class="button__card--close" id="closeCard">Close</button>`;
     document.querySelector(".button__card").innerHTML +=
       '<button class="button__card--close" id="buyCard">Buy</button>';
+  }
+  if (type == "info") {
+    document.querySelector(
+      ".button__card"
+    ).innerHTML += `<button class="button__card--close" id="closeCard">Close</button>`;
   }
   document.querySelector(".card").style.display = "flex";
 }
