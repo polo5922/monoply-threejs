@@ -93,6 +93,186 @@ for (let index = 0; index < 40; index++) {
   cards_properties_list.push(new card_properties(index, "white"));
 }
 
+class card_house {
+  constructor(position, type) {
+    this.house = [];
+    this.hotel;
+    this.position = position;
+    this.not_display = [
+      0, 2, 4, 5, 7, 10, 12, 15, 17, 20, 22, 25, 28, 30, 33, 35, 36, 38, 40,
+    ];
+
+    this.house_on = new THREE.MeshBasicMaterial({
+      color: new THREE.Color("green"),
+      opacity: 1,
+      transparent: true,
+    });
+    this.house_off = new THREE.MeshBasicMaterial({
+      color: new THREE.Color("green"),
+      opacity: 0,
+      transparent: true,
+    });
+    this.hotel_on = new THREE.MeshBasicMaterial({
+      color: new THREE.Color("red"),
+      opacity: 1,
+      transparent: true,
+    });
+    this.hotel_off = new THREE.MeshBasicMaterial({
+      color: new THREE.Color("red"),
+      opacity: 0,
+      transparent: true,
+    });
+  }
+
+  initHouse() {
+    if (!this.not_display.includes(this.position)) {
+      for (let i = 0; i < 4; i++) {
+        if (this.position < 10 || (this.position > 20 && this.position < 30)) {
+          this.house.push(
+            new THREE.Mesh(
+              new THREE.BoxGeometry(0.02, 0.05, 0.05),
+              this.house_off
+            )
+          );
+        } else {
+          this.house.push(
+            new THREE.Mesh(
+              new THREE.BoxGeometry(0.05, 0.05, 0.02),
+              this.house_off
+            )
+          );
+        }
+        if (this.position < 10) {
+          let x = 0.24 * -(this.position - 4.7);
+          x = x + 0.05 * i;
+          // console.log(x);
+          this.house[i].position.x = x;
+          this.house[i].position.y = 0.15;
+          this.house[i].position.z = 0.25 * 5 - 0.1;
+          // console.log(this.position, this.house[i].position.x);
+        }
+        if (this.position > 10 && this.position < 20) {
+          let modulo = this.position % 10;
+          let z = 0.24 * -(modulo - 4.7);
+          z = z + 0.05 * i;
+          // console.log(x);
+          this.house[i].position.x = 0.25 * -4.2 - 0.1;
+          this.house[i].position.y = 0.15;
+          this.house[i].position.z = z;
+          // console.log(this.position, this.house[i].position.x);
+        }
+        if (this.position > 20 && this.position < 30) {
+          let modulo = this.position % 10;
+          let x = 0.24 * -(modulo - 4.7);
+          x = x + 0.05 * i;
+          // console.log(x);
+          this.house[i].position.x = -x;
+          this.house[i].position.y = 0.15;
+          this.house[i].position.z = 0.25 * -4.2 - 0.1;
+          // console.log(this.position, this.house[i].position.x);
+        }
+        if (this.position > 30 && this.position < 40) {
+          let modulo = this.position % 10;
+          let z = 0.24 * -(modulo - 4.7);
+          z = z + 0.05 * i;
+          // console.log(x);
+          this.house[i].position.x = 0.25 * 4.9 - 0.1;
+          this.house[i].position.y = 0.15;
+          this.house[i].position.z = -z;
+          // console.log(this.position, this.house[i].position.x);
+        }
+        scene.add(this.house[i]);
+      }
+    }
+  }
+
+  initHotel() {
+    if (!this.not_display.includes(this.position)) {
+      if (this.position < 10 || (this.position > 20 && this.position < 30)) {
+        this.hotel = new THREE.Mesh(
+          new THREE.BoxGeometry(0.02, 0.5, 0.05),
+          this.house_off
+        );
+      } else {
+        this.hotel = new THREE.Mesh(
+          new THREE.BoxGeometry(0.05, 0.5, 0.02),
+          this.house_off
+        );
+      }
+      if (this.position < 10) {
+        let x = 0.23 * -(this.position - 4.6);
+
+        // console.log(x);
+        this.hotel.position.x = x;
+        this.hotel.position.y = 0.15;
+        this.hotel.position.z = 0.25 * 5 - 0.1;
+        console.log(this.position, this.hotel.position.x);
+      }
+      if (this.position < 10) {
+        let x = 0.24 * -(this.position - 4.7);
+
+        // console.log(x);
+        this.hotel.position.x = x;
+        this.hotel.position.y = 0.15;
+        this.hotel.position.z = 0.25 * 5 - 0.1;
+        // console.log(this.position, this.hotel.position.x);
+      }
+      if (this.position > 10 && this.position < 20) {
+        let modulo = this.position % 10;
+        let z = 0.24 * -(modulo - 4.7);
+
+        // console.log(x);
+        this.hotel.position.x = 0.25 * -4.2 - 0.1;
+        this.hotel.position.y = 0.15;
+        this.hotel.position.z = z;
+        // console.log(this.position, this.hotel.position.x);
+      }
+      if (this.position > 20 && this.position < 30) {
+        let modulo = this.position % 10;
+        let x = 0.24 * -(modulo - 4.7);
+
+        // console.log(x);
+        this.hotel.position.x = -x;
+        this.hotel.position.y = 0.15;
+        this.hotel.position.z = 0.25 * -4.2 - 0.1;
+        // console.log(this.position, this.hotel.position.x);
+      }
+      if (this.position > 30 && this.position < 40) {
+        let modulo = this.position % 10;
+        let z = 0.24 * -(modulo - 4.7);
+
+        // console.log(x);
+        this.hotel.position.x = 0.25 * 4.9 - 0.1;
+        this.hotel.position.y = 0.15;
+        this.hotel.position.z = -z;
+        // console.log(this.position, this.house[i].position.x);
+      }
+      this.hotel.name = "hotel_" + this.position;
+      scene.add(this.hotel);
+    }
+  }
+
+  display(number) {
+    if (!this.not_display.includes(this.position)) {
+      if (this.house.length > 0) {
+        if (number <= 4) {
+          for (let i = 0; i < number; i++) {
+            this.house[i].material = this.house_on;
+          }
+        }
+        if (number == 5) {
+          this.hotel.material = this.hotel_on;
+          for (let i = 0; i < 4; i++) {
+            this.house[i].scale.x = 0;
+            this.house[i].scale.y = 0;
+            this.house[i].scale.z = 0;
+          }
+        }
+      }
+    }
+  }
+}
+
 class Player {
   constructor(name, position, money, color, colorVanilla) {
     this.name = name;
@@ -166,6 +346,15 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
+
+let houses = [];
+for (let index = 0; index < 40; index++) {
+  houses.push(new card_house(index, "house"));
+  houses[index].initHouse();
+  houses[index].initHotel();
+  houses[index].display(4);
+}
+// houses[0].display(0);
 cards_properties_list.forEach((card) => {
   card.initCard();
 });
@@ -234,6 +423,7 @@ function click(event) {
   var intersections = raycaster.intersectObjects(scene.children);
   if (intersections.length > 0) {
     intersections.forEach((intersection) => {
+      // console.log(intersection.object.name);
       if (intersection.object.name.includes("card")) {
         console.log(intersection.object.name);
         let card_index = intersection.object.name.split("_")[1];
@@ -283,28 +473,38 @@ document.getElementById("add_player").addEventListener("click", () => {
 
 function add_player() {
   let player_name = document.getElementById("player_name").value;
+  let player_name_exists = false;
   if (player_name == "") {
     alert("Please enter a name");
     return;
   }
-  let player_color = document.getElementById("player_color").value;
-  players.push(
-    new Player(
-      player_name,
-      0,
-      1500,
-      new THREE.Color(player_color),
-      player_color
-    )
-  );
-  document.getElementById("player_name").value = "";
-  document.getElementById("player_name").focus();
-  document.getElementById("players_form").style.display = "none";
-  display_player_form = false;
-  if (players.length >= 2) {
-    document.getElementById("start_game").style.display = "block";
-  } else {
-    document.getElementById("start_game").style.display = "none";
+  players.map((player) => {
+    if (player.name == player_name) {
+      alert("Player name already exists");
+      player_name_exists = true;
+      return;
+    }
+  });
+  if (!player_name_exists) {
+    let player_color = document.getElementById("player_color").value;
+    players.push(
+      new Player(
+        player_name,
+        0,
+        1500,
+        new THREE.Color(player_color),
+        player_color
+      )
+    );
+    document.getElementById("player_name").value = "";
+    document.getElementById("player_name").focus();
+    document.getElementById("players_form").style.display = "none";
+    display_player_form = false;
+    if (players.length >= 2) {
+      document.getElementById("start_game").style.display = "block";
+    } else {
+      document.getElementById("start_game").style.display = "none";
+    }
   }
 }
 
@@ -326,7 +526,7 @@ function startGame() {
   document.getElementById("start_game").style.display = "none";
   document.getElementById("roll_dice").style.display = "block";
   document.getElementById("players_form").style.display = "none";
-  document.getElementById("Add_Player").style.display = "none";
+  document.getElementById("Add_Player_view").style.display = "none";
   document.getElementById("players_stats").style.display = "block";
   update_player_money();
   players.forEach((player) => {
