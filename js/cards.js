@@ -82,6 +82,15 @@ export function exportCard() {
       position: 11,
     },
     {
+      color: "lightgrey",
+      name: "Compagnie electricité",
+      price: 150,
+      rent: 4,
+      mortgage: 75,
+      position: 12,
+      type: "compagnie",
+    },
+    {
       color: "pink",
       name: "Avenue de Neuilly",
       price: 140,
@@ -218,6 +227,15 @@ export function exportCard() {
       hotel_price: 150,
       mortgage: 130,
       position: 27,
+    },
+    {
+      color: "lightgrey",
+      name: "Compagnie de distribution d'eau",
+      price: 150,
+      rent: 4,
+      mortgage: 75,
+      position: 28,
+      type: "compagnie",
     },
     {
       color: "yellow",

@@ -99,6 +99,8 @@ class Player {
     this.position = position;
     this.money = money;
     this.color = color;
+    this.double = false;
+    this.double_count = 0;
   }
 
   initPlayer() {
@@ -323,6 +325,10 @@ document.getElementById("roll_dice").addEventListener("click", async () => {
     document.getElementById(
       "dice"
     ).innerHTML = `Dice: ${random} + ${random2} = ${random + random2}`;
+    if (random == random2) {
+      players[current_player].double = true;
+      players[current_player].double_count++;
+    }
     for (let i = 0; i < random + random2; i++) {
       players[current_player].addPosition();
       players[current_player].cube.position.y = 0.16;
@@ -380,12 +386,14 @@ document.getElementById("finish_turn").addEventListener("click", () => {
   finishTurn();
 });
 function finishTurn() {
-  finish_round = true;
-  if (current_player != players.length - 1) {
-    current_player += 1;
-  } else {
-    current_player = 0;
+  if (players[current_player].double != true) {
+    if (current_player != players.length - 1) {
+      current_player += 1;
+    } else {
+      current_player = 0;
+    }
   }
+  finish_round = true;
   document.getElementById("finish_turn").style.display = "none";
   document.getElementById("dice").innerHTML = "";
   document.getElementById(
