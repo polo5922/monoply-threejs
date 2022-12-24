@@ -94,11 +94,12 @@ for (let index = 0; index < 40; index++) {
 }
 
 class Player {
-  constructor(name, position, money, color) {
+  constructor(name, position, money, color, colorVanilla) {
     this.name = name;
     this.position = position;
     this.money = money;
     this.color = color;
+    this.colorVanilla = colorVanilla;
     this.double = false;
     this.double_count = 0;
   }
@@ -261,8 +262,22 @@ const axesHelper = new THREE.AxesHelper(5);
 document.getElementById("start_game").addEventListener("click", () => {
   startGame();
 });
-
-document.getElementById("Add_Player").addEventListener("click", () => {
+let display_player_form = false;
+document.getElementById("Add_Player_view").addEventListener("click", () => {
+  let players_list = document.querySelector("#players_form>ul");
+  players_list.innerHTML = "";
+  players.forEach((player) => {
+    console.log(player.colorVanilla);
+    players_list.innerHTML += `<li><span style="color:${player.colorVanilla}">▬</span> ${player.name}</li>`;
+  });
+  display_player_form = !display_player_form;
+  if (display_player_form) {
+    document.getElementById("players_form").style.display = "flex";
+  } else {
+    document.getElementById("players_form").style.display = "none";
+  }
+});
+document.getElementById("add_player").addEventListener("click", () => {
   add_player();
 });
 
@@ -273,10 +288,19 @@ function add_player() {
     return;
   }
   let player_color = document.getElementById("player_color").value;
-  players.push(new Player(player_name, 0, 1500, new THREE.Color(player_color)));
+  players.push(
+    new Player(
+      player_name,
+      0,
+      1500,
+      new THREE.Color(player_color),
+      player_color
+    )
+  );
   document.getElementById("player_name").value = "";
-  document.getElementById("player_color").value = "";
   document.getElementById("player_name").focus();
+  document.getElementById("players_form").style.display = "none";
+  display_player_form = false;
   if (players.length >= 2) {
     document.getElementById("start_game").style.display = "block";
   } else {
@@ -386,7 +410,10 @@ document.getElementById("finish_turn").addEventListener("click", () => {
   finishTurn();
 });
 function finishTurn() {
-  if (players[current_player].double != true) {
+  if (
+    players[current_player].double != true ||
+    players[current_player].double_count == 3
+  ) {
     if (current_player != players.length - 1) {
       current_player += 1;
     } else {
