@@ -1,7 +1,7 @@
 export function exportCard() {
   let cards = [
     {
-      color: "brown",
+      color: "rgb(86, 10, 55)",
       name: "Boulevard de Belleville",
       price: 60,
       rent: 2,
@@ -13,7 +13,7 @@ export function exportCard() {
       position: 1,
     },
     {
-      color: "brown",
+      color: "rgb(86, 10, 55)",
       name: "Rue Lecourbe",
       price: 60,
       rent: 4,
@@ -34,7 +34,7 @@ export function exportCard() {
       position: 5,
     },
     {
-      color: "lightblue",
+      color: "rgb(133, 163, 214)",
       name: "Rue de Vaugirard",
       price: 100,
       rent: 6,
@@ -46,7 +46,7 @@ export function exportCard() {
       position: 6,
     },
     {
-      color: "lightblue",
+      color: "rgb(133, 163, 214)",
       name: "Rue de Courcelles",
       price: 100,
       rent: 6,
@@ -58,7 +58,7 @@ export function exportCard() {
       position: 8,
     },
     {
-      color: "lightblue",
+      color: "rgb(133, 163, 214)",
       name: "Avenue de la République",
       price: 120,
       rent: 8,
@@ -70,7 +70,7 @@ export function exportCard() {
       position: 9,
     },
     {
-      color: "pink",
+      color: "rgb(238, 55, 119)",
       name: "Boulevard de la Villette",
       price: 140,
       rent: 10,
@@ -91,7 +91,7 @@ export function exportCard() {
       type: "compagnie",
     },
     {
-      color: "pink",
+      color: "rgb(238, 55, 119)",
       name: "Avenue de Neuilly",
       price: 140,
       rent: 10,
@@ -103,7 +103,7 @@ export function exportCard() {
       position: 13,
     },
     {
-      color: "pink",
+      color: "rgb(238, 55, 119)",
       name: "Rue de Paradis",
       price: 160,
       rent: 12,
@@ -124,7 +124,7 @@ export function exportCard() {
       position: 15,
     },
     {
-      color: "orange",
+      color: "rgb(245, 126, 34)",
       name: "Avenue Mozart",
       price: 180,
       rent: 14,
@@ -136,7 +136,7 @@ export function exportCard() {
       position: 16,
     },
     {
-      color: "orange",
+      color: "rgb(245, 126, 34)",
       name: "Boulevard Saint-Michel",
       price: 180,
       rent: 14,
@@ -148,7 +148,7 @@ export function exportCard() {
       position: 18,
     },
     {
-      color: "orange",
+      color: "rgb(245, 126, 34)",
       name: "Place Pigalle",
       price: 200,
       rent: 16,
@@ -160,7 +160,7 @@ export function exportCard() {
       position: 19,
     },
     {
-      color: "red",
+      color: "rgb(238, 56, 35)",
       name: "Avenue Matignon",
       price: 220,
       rent: 18,
@@ -172,7 +172,7 @@ export function exportCard() {
       position: 21,
     },
     {
-      color: "red",
+      color: "rgb(238, 56, 35)",
       name: "Boulevard Malesherbes",
       price: 220,
       rent: 18,
@@ -184,7 +184,7 @@ export function exportCard() {
       position: 23,
     },
     {
-      color: "red",
+      color: "rgb(238, 56, 35)",
       name: "Avenue Henri-Martin",
       price: 240,
       rent: 20,
@@ -205,7 +205,8 @@ export function exportCard() {
       position: 25,
     },
     {
-      color: "yellow",
+      color: "rgb(253, 230, 1)",
+      text_color: "black",
       name: "Faubourg Saint-Honoré",
       price: 260,
       rent: 22,
@@ -217,7 +218,8 @@ export function exportCard() {
       position: 26,
     },
     {
-      color: "yellow",
+      color: "rgb(253, 230, 1)",
+      text_color: "black",
       name: "Place de la Bourse",
       price: 260,
       rent: 22,
@@ -238,7 +240,8 @@ export function exportCard() {
       type: "compagnie",
     },
     {
-      color: "yellow",
+      color: "rgb(253, 230, 1)",
+      text_color: "black",
       name: "Rue la Fayette",
       price: 280,
       rent: 24,
@@ -250,7 +253,7 @@ export function exportCard() {
       position: 29,
     },
     {
-      color: "green",
+      color: "rgb(17, 164, 91)",
       name: "Avenue de Breteuil",
       price: 300,
       rent: 26,
@@ -262,7 +265,7 @@ export function exportCard() {
       position: 31,
     },
     {
-      color: "green",
+      color: "rgb(17, 164, 91)",
       name: "Avenue Foch",
       price: 300,
       rent: 26,
@@ -274,7 +277,7 @@ export function exportCard() {
       position: 32,
     },
     {
-      color: "green",
+      color: "rgb(17, 164, 91)",
       name: "Boulevard des Capucines",
       price: 320,
       rent: 28,
@@ -295,7 +298,7 @@ export function exportCard() {
       position: 35,
     },
     {
-      color: "blue",
+      color: "rgb(40, 77, 161)",
       name: "Avenue des Champs-Élysées",
       price: 350,
       rent: 35,
@@ -307,7 +310,7 @@ export function exportCard() {
       position: 37,
     },
     {
-      color: "blue",
+      color: "rgb(40, 77, 161)",
       name: "Rue de la Paix",
       price: 400,
       rent: 50,
@@ -325,6 +328,9 @@ export function exportCard() {
 export function generateCardsUi(card, type) {
   console.log("card generate", card.position);
   document.querySelector(".card__content").style.backgroundColor = card.color;
+  if (card.text_color) {
+    document.querySelector(".card__title").style.color = card.text_color;
+  }
   document.querySelector(".card__title").innerHTML = card.name;
   let cardInfoSelector = document.querySelector(".card__info");
   cardInfoSelector.innerHTML = "";

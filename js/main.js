@@ -352,7 +352,7 @@ for (let index = 0; index < 40; index++) {
   houses.push(new card_house(index, "house"));
   houses[index].initHouse();
   houses[index].initHotel();
-  houses[index].display(4);
+  // houses[index].display(4);
 }
 // houses[0].display(0);
 cards_properties_list.forEach((card) => {
