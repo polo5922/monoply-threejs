@@ -322,10 +322,18 @@ export function exportCard() {
       position: 39,
     },
   ];
+  cards.map((card) => {
+    if (card.type === "gare") {
+      card.rent = [25, 50, 100, 200];
+    } else if (card.type === "compagnie") {
+      card.rent = [4, 10];
+    }
+    card.owner = null;
+  });
   return cards;
 }
 
-export function generateCardsUi(card, type) {
+export function generateCardsUi(card, type, cards, current_player) {
   console.log("card generate", card.position);
   document.querySelector(".card__content").style.backgroundColor = card.color;
   if (card.text_color) {
@@ -335,20 +343,58 @@ export function generateCardsUi(card, type) {
   let cardInfoSelector = document.querySelector(".card__info");
   cardInfoSelector.innerHTML = "";
   if (card.type !== "gare" && card.type !== "compagnie") {
-    cardInfoSelector.innerHTML += `<p>Price: ${card.price}</p>`;
-    cardInfoSelector.innerHTML += `<p>Rent: ${card.rent}</p>`;
-    cardInfoSelector.innerHTML += `<p>House: ${card.house}</p>`;
-    cardInfoSelector.innerHTML += `<p>Hotel: ${card.hotel}</p>`;
-    cardInfoSelector.innerHTML += `<p>House Price: ${card.house_price}</p>`;
-    cardInfoSelector.innerHTML += `<p>Hotel Price: ${card.hotel_price}</p>`;
-    cardInfoSelector.innerHTML += `<p>hypotheque: ${card.mortgage}</p>`;
+    if (type === "info-owner") {
+      cardInfoSelector.innerHTML += `<p>Price: ${card.price}</p>`;
+      cardInfoSelector.innerHTML += `<p>Rent: ${card.rent}</p>`;
+      cardInfoSelector.innerHTML += `<p>House: ${card.house}</p>`;
+      let colorCheck = cards.filter(
+        (card_test) => card_test.color === card.color
+      );
+      let index_check = [];
+      colorCheck.forEach((element) => {
+        index_check.push(element.position);
+      });
+      console.log("colorCheck", index_check);
+      let test = 0;
+      index_check.forEach((element) => {
+        let el = cards.map((card) => {
+          if (card.position === element) {
+            return card;
+          }
+        });
+        el = el.filter((el) => el !== undefined);
+        if (el[0].owner !== undefined) {
+          //  console.log(
+          //   typeof el[0].owner,
+          //   el[0].owner,
+          //   typeof current_player,
+          //   current_player
+          // );
+          if (el[0].owner === Number(current_player)) {
+            console.log("equal");
+            test += 1;
+          }
+        }
+      });
+      console.log(test, index_check.length);
+      if (test === index_check.length) {
+        cardInfoSelector.innerHTML += `<p>House Selector</p>`;
+      }
+    } else {
+      cardInfoSelector.innerHTML += `<p>Price: ${card.price}</p>`;
+      cardInfoSelector.innerHTML += `<p>Rent: ${card.rent}</p>`;
+      cardInfoSelector.innerHTML += `<p>House: ${card.house}</p>`;
+      cardInfoSelector.innerHTML += `<p>Hotel: ${card.hotel}</p>`;
+      cardInfoSelector.innerHTML += `<p>House Price: ${card.house_price}</p>`;
+      cardInfoSelector.innerHTML += `<p>Hotel Price: ${card.hotel_price}</p>`;
+      cardInfoSelector.innerHTML += `<p>hypotheque: ${card.mortgage}</p>`;
+    }
   }
   if (card.type === "gare") {
     cardInfoSelector.innerHTML += `<p>Price: ${card.price}</p>`;
     cardInfoSelector.innerHTML += `<p>Rent: ${card.rent}</p>`;
     cardInfoSelector.innerHTML += `<p>hypotheque: ${card.mortgage}</p>`;
   }
-  console.log(card.owner);
   document.querySelector(".button__card").innerHTML = ``;
   if (type == "rent") {
     document.querySelector(
@@ -366,6 +412,15 @@ export function generateCardsUi(card, type) {
     document.querySelector(
       ".button__card"
     ).innerHTML += `<button class="button__card--close" id="closeCard">Close</button>`;
+  }
+
+  if (type == "info-owner") {
+    document.querySelector(
+      ".button__card"
+    ).innerHTML += `<button class="button__card--close" id="closeCard">Close</button>`;
+    document.querySelector(
+      ".button__card"
+    ).innerHTML += `<button class="button__card--close" id="updateCard">Update</button>`;
   }
   document.querySelector(".card").style.display = "flex";
 }

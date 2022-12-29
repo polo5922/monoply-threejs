@@ -274,9 +274,9 @@ class card_house {
 }
 
 class Player {
-  constructor(name, position, money, color, colorVanilla) {
+  constructor(name, money, color, colorVanilla) {
     this.name = name;
-    this.position = position;
+    this.position = 0;
     this.money = money;
     this.color = color;
     this.colorVanilla = colorVanilla;
@@ -347,12 +347,15 @@ const camera = new THREE.PerspectiveCamera(
   1000
 );
 
+players.push(new Player("player1", 1500, 0x00ff00, 0x00ff00));
+players.push(new Player("player2", 1500, 0x0000ff, 0x0000ff));
+
 let houses = [];
 for (let index = 0; index < 40; index++) {
   houses.push(new card_house(index, "house"));
   houses[index].initHouse();
   houses[index].initHotel();
-  // houses[index].display(4);
+  houses[index].display(4);
 }
 // houses[0].display(0);
 cards_properties_list.forEach((card) => {
@@ -422,26 +425,39 @@ function click(event) {
 
   var intersections = raycaster.intersectObjects(scene.children);
   if (intersections.length > 0) {
-    intersections.forEach((intersection) => {
-      // console.log(intersection.object.name);
-      if (intersection.object.name.includes("card")) {
-        console.log(intersection.object.name);
-        let card_index = intersection.object.name.split("_")[1];
-        card_index = Number(card_index);
-        console.log(card_index);
-        cards.map((card) => {
-          if (card.position == card_index) {
-            generateCardsUi(card, "info");
-            //event listener for close button
-            document
-              .getElementById("closeCard")
-              .addEventListener("click", () => {
-                closeCard();
-              });
-          }
-        });
-      }
-    });
+    if (!need_to_pay) {
+      intersections.forEach((intersection) => {
+        // console.log(intersection.object.name);
+        if (intersection.object.name.includes("card")) {
+          console.log(intersection.object.name);
+          let card_index = intersection.object.name.split("_")[1];
+          card_index = Number(card_index);
+          console.log(card_index);
+          cards.map((card) => {
+            if (card.position == card_index) {
+              console.log(card.owner, current_player);
+              if (card.owner != null && card.owner === current_player) {
+                generateCardsUi(card, "info-owner", cards, current_player);
+                document
+                  .getElementById("updateCard")
+                  .addEventListener("click", () => {
+                    updateCard(card);
+                    closeCard();
+                  });
+              } else {
+                generateCardsUi(card, "info");
+              }
+              //event listener for close button
+              document
+                .getElementById("closeCard")
+                .addEventListener("click", () => {
+                  closeCard();
+                });
+            }
+          });
+        }
+      });
+    }
   }
 }
 
@@ -540,12 +556,16 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+let need_to_pay = false;
+
 let finish_round = true;
 document.getElementById("roll_dice").addEventListener("click", async () => {
   if (finish_round) {
     finish_round = false;
     let random = Math.floor(Math.random() * 6) + 1;
     let random2 = Math.floor(Math.random() * 6) + 1;
+    random2 = 0;
+    random = 1;
     document.getElementById(
       "dice"
     ).innerHTML = `Dice: ${random} + ${random2} = ${random + random2}`;
@@ -561,13 +581,14 @@ document.getElementById("roll_dice").addEventListener("click", async () => {
     cards.map((card) => {
       if (card.position == players[current_player].position) {
         console.table(card);
-        if (card.owner === undefined) {
+        if (card.owner === null) {
           generateCardsUi(card, "buy");
         } else {
           generateCardsUi(card, "rent");
         }
         try {
           if (card.owner != null) {
+            need_to_pay = true;
             document.getElementById("payRent").addEventListener("click", () => {
               console.log(card);
               payRent(card, players[current_player]);
@@ -647,6 +668,7 @@ function buyCard(card, player) {
 }
 
 function payRent(card, player) {
+  need_to_pay = false;
   if (player.money >= card.rent) {
     player.money -= card.rent;
     players[card.owner].money += card.rent;

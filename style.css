@@ -145,7 +145,7 @@ button:focus-visible {
 }
 
 #start_game {
-  display: none;
+  display: block;
 }
 
 #finish_turn {
